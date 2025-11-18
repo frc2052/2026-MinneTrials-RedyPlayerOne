@@ -8,16 +8,24 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
 
 
 
 public class DriveTrain extends SubsystemBase {
   /** Creates a new DriveTrain. */
   public DriveTrain() {}
-  public WPI_TalonSRX left_motor = new WPI_TalonSRX(0);
-  public WPI_TalonSRX right_motor = new WPI_TalonSRX(1);
 
-  
+  private WPI_TalonSRX left_motor = new WPI_TalonSRX(0);
+  private WPI_TalonSRX right_motor = new WPI_TalonSRX(1);
+
+  private final DifferentialDrive m_DifferentialDrive= new DifferentialDrive(left_motor::set, right_motor::set);
+
+  public void arcadeDrive(double left_speed, double right_speed){
+    m_DifferentialDrive.arcadeDrive(left_speed,right_speed);
+  }
+
 
 
   @Override
