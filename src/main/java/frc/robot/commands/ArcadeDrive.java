@@ -19,21 +19,30 @@ public class ArcadeDrive extends Command {
   public ArcadeDrive() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
+  public ArcadeDrive(
+    DriveTrain drivetrain,
+    Supplier<Double> xaxisSpeedSupplier,
+    Supplier<Double> zaxisRotateSupplier) {
+  m_drivetrain = drivetrain;
+  m_xaxisSpeedSupplier = xaxisSpeedSupplier;
+  m_zaxisRotateSupplier = zaxisRotateSupplier;
+  addRequirements(drivetrain);
+}
 
   // Called when the command is initially scheduled.
-  @Override
+  Override
   public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
-  @Override
+  Override
   public void execute() {}
 
   // Called once the command ends or is interrupted.
-  @Override
+  Override
   public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
-  @Override
+  Override
   public boolean isFinished() {
     return false;
   }
