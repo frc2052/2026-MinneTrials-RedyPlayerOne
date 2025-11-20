@@ -10,10 +10,12 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -29,6 +31,8 @@ private final DriveTrain m_driveTrain = new DriveTrain();
 public Command getArcadeDriveCommand() {
    return new ArcadeDrive(
     m_driveTrain, () -> -m_controller.getRawAxis(1), () -> -m_controller.getRawAxis(5));
+
+    private final Shoot Shooter = new Shooter();
 }
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -58,6 +62,14 @@ m_driveTrain.setDefaultCommand(getArcadeDriveCommand());
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+ 
+
+
+    JoystickButton joystickAButton = new JoystickButton(m_controller, 1);
+    joystickAButton
+        .onTrue(new InstantCommand(() -> Shooter.Shoot(45.0), Shooter))
+        .onFalse(new InstantCommand(() -> Shooter.Shoot(0.0), Shooter));
+ 
   }
 
 
