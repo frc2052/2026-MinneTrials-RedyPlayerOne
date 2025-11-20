@@ -4,15 +4,47 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;cc
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix6.hardware.Pigeon2;
+
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DrivetrainConstants;
 
 public class DrivetrainSubsystem extends SubsystemBase {
-  /** Creates a new DrivetrainSubsystem. */
-  public DrivetrainSubsystem() {}
+    private final WPI_TalonSRX leftMotor = new WPI_TalonSRX(DrivetrainConstants.LEFT_MOTOR_ID);
+    private final WPI_TalonSRX rightMotor = new WPI_TalonSRX(DrivetrainConstants.RIGHT_MOTOR_ID);
+    // private final Pigeon2 pigeon = new Pigeon2(DrivetrainConstants.PIGEON_ID);
+    private final DifferentialDrive drive = new DifferentialDrive(leftMotor, rightMotor);
+    // private final DifferentialDriveOdometry odometry =
+    //   new DifferentialDriveOdometry(Rotation2d.fromDegrees(0.0));
 
+  /** Creates a new DrivetrainSubsystem. */
+  public DrivetrainSubsystem() {
+    leftMotor.configFactoryDefault();
+    rightMotor.configFactoryDefault();
+
+    leftMotor.setNeutralMode(NeutralMode.Brake);
+    rightMotor.setNeutralMode(NeutralMode.Brake);
+
+    leftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, DrivetrainConstants.VELOCITY_CONTROL_SLOT, DrivetrainConstants.CAN_TIMEOUT);
+    rightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, DrivetrainConstants.VELOCITY_CONTROL_SLOT, DrivetrainConstants.CAN_TIMEOUT);
+  }
+  public void tankDrive(double leftSpeed, double rightSpeed) {
+    drive.tankDrive(leftSpeed, rightSpeed);
+  }
+  public void arcadeDrive(double fwd, double rot) {
+    drive.arcadeDrive(fwd, rot);
+  }
+  public void stop() {
+    drive.stopMotor();
+  }
   @Override
   public void periodic() {
-    WPI_TalonSRX
     // This method will be called once per scheduler run
   }
 }
