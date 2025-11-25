@@ -4,25 +4,15 @@
 
 package frc.robot.commands;
 
-import java.util.function.Supplier;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.DrivetrainSubsystem;
-
+import frc.robot.subsystems.IntakeSubsystem;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ArcadeDriveCommand extends Command {
-  /** Creates a new ArcadeDriveCommand. */
-  DrivetrainSubsystem drivetrain;
-  Supplier<Double> forward;
-  Supplier<Double> rotation;
-  public ArcadeDriveCommand(DrivetrainSubsystem drivetrain, Supplier<Double> forward, Supplier<Double> rotation) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.drivetrain = drivetrain;
-    this.forward = forward;
-    this.rotation = rotation;
-    addRequirements(drivetrain);
+public class IntakeButterCommand extends Command {
+  private final IntakeSubsystem intakeSubsystem;
+  public IntakeButterCommand(IntakeSubsystem intakeSubsystem) {
+    this.intakeSubsystem = intakeSubsystem;
+    addRequirements(intakeSubsystem);
   }
-
 
   // Called when the command is initially scheduled.
   @Override
@@ -33,14 +23,13 @@ public class ArcadeDriveCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.arcadeDrive(forward.get(), rotation.get());
-
+    intakeSubsystem.intakeButter(0.1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    intakeSubsystem.stopRoller();
   }
 
   // Returns true when the command should end.
@@ -49,3 +38,18 @@ public class ArcadeDriveCommand extends Command {
     return false;
   }
 }
+// public void intakePopcorn(double speed){
+//   rollerMotor.set(speed);
+// }
+// public void intakeButter(double speed){
+//   rollerMotor.set(-speed);
+// }
+// public void stopRoller(){
+//   rollerMotor.stopMotor();
+// }
+// public void winchMoves(double speed){
+//   winchMotor.set(speed);
+// }
+// public void stopWinch(){
+//   winchMotor.stopMotor();
+// }

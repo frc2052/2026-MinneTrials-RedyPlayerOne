@@ -25,5 +25,12 @@ public final class Constants {
     public static final int VELOCITY_CONTROL_SLOT = 0;
     public static final int CAN_TIMEOUT = 20;
   }
-  
+  public static class ShooterConstants {
+    public static final int BOT_SHOOT_MOTOR_ID = 4;
+    public static final int TOP_SHOOT_MOTOR_ID = 5;
+  }
+  public static class IntakeConstants {
+    public static final int ROLLER_MOTOR_ID = 2;
+    public static final int WINCH_MOTOR_ID = 3;
+  }
 }

@@ -20,8 +20,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final WPI_TalonSRX rightMotor = new WPI_TalonSRX(DrivetrainConstants.RIGHT_MOTOR_ID);
     // private final Pigeon2 pigeon = new Pigeon2(DrivetrainConstants.PIGEON_ID);
     private final DifferentialDrive drive = new DifferentialDrive(leftMotor, rightMotor);
-    // private final DifferentialDriveOdometry odometry =
-    //   new DifferentialDriveOdometry(Rotation2d.fromDegrees(0.0));
+    // private final DifferentialDriveOdometry odometry;
 
   /** Creates a new DrivetrainSubsystem. */
   public DrivetrainSubsystem() {
