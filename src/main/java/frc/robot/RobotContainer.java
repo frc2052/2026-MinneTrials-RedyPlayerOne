@@ -24,7 +24,7 @@ public class RobotContainer {
 
   private final DrivetrainSubsystem m_DrivetrainSubsystem = new DrivetrainSubsystem();
   private final ShooterSubsystem m_ShooterSubsystem = new ShooterSubsystem();
-  Joystick joystick = new Joystick(0);
+  private final Joystick joystick = new Joystick(0);
   
   public RobotContainer() {
     configureBindings();
@@ -36,8 +36,8 @@ public class RobotContainer {
     );
     JoystickButton button1 = new JoystickButton(joystick, 1);
     button1.whileTrue(new ShooterCommand(m_ShooterSubsystem));
-
-    
+    JoystickButton button2 = new JoystickButton(joystick, 2);
+  
   }
 
   /**

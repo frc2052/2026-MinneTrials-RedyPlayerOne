@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 // Clockwise RollerMotor to intake popcorn/outake butter and counterclockwise RollerMotorto outtake popcorn/intake butter
 // WinchMotor to raise and lower intake arm -- basically an indexer -- brings it down to the shooter. 
@@ -19,6 +20,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {
     rollerMotor.configFactoryDefault();
     winchMotor.configFactoryDefault();
+    winchMotor.setNeutralMode(NeutralMode.Brake);
   }
   @Override
   public void periodic() {

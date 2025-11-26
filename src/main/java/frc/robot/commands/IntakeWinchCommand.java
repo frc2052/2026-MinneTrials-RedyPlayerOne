@@ -4,33 +4,53 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class IntakePopcornCommand extends Command {
-  /** Creates a new IntakeCommand. */
+public class IntakeWinchCommand extends Command {
+  /** Creates a new IntakeWinchDown. */
   private final IntakeSubsystem intakeSubsystem;
-  public IntakePopcornCommand(IntakeSubsystem intakeSubsystem) {
+  private final Timer timer;
+  public IntakeWinchCommand(IntakeSubsystem intakeSubsystem, Timer timer) {
+    // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSubsystem = intakeSubsystem;
+    this.timer = timer;
     addRequirements(intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer.reset();
+    timer.start();
+  }
+
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSubsystem.intakePopcorn(0.1);
+    if(timer.get() <= 2){
+      intakeSubsystem.winchMoves(.5);
+    } else {
+      intakeSubsystem.stopWinch();
+    }
   }
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeSubsystem.stopRoller();
+    intakeSubsystem.stopWinch();
   }
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
   }
 }
+// public void winchMoves(double speed){
+//   winchMotor.set(speed);
+// }
+// public void stopWinch(){
+//   winchMotor.stopMotor();
+// }

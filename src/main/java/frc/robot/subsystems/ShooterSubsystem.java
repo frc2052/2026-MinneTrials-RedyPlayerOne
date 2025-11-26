@@ -19,8 +19,10 @@ private final WPI_TalonSRX topShootMotor;
     botShootMotor = new WPI_TalonSRX(Constants.ShooterConstants.BOT_SHOOT_MOTOR_ID);
     botShootMotor.setNeutralMode(NeutralMode.Brake);
     botShootMotor.setInverted(true);
+    botShootMotor.configFactoryDefault();
     topShootMotor = new WPI_TalonSRX(Constants.ShooterConstants.TOP_SHOOT_MOTOR_ID);
     topShootMotor.setNeutralMode(NeutralMode.Brake);
+    topShootMotor.configFactoryDefault();
   }
 
   @Override
