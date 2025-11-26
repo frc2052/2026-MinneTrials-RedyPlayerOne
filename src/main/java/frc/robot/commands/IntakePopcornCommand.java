@@ -4,28 +4,38 @@
 
 package frc.robot.commands;
 
-import java.util.function.Supplier;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.DriveTrain;
-
+import frc.robot.subsystems.Intake;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ArcadeDrive extends Command {
-  /** Creates a new ArcadeDrive. */
-  private final DriveTrain m_drivetrain;
-  private final Supplier<Double> m_xaxisSpeedSupplier;
-  private final Supplier<Double> m_zaxisRotateSupplier;
-  
-  public ArcadeDrive(
-    DriveTrain drivetrain,
-    Supplier<Double> xaxisSpeedSupplier,
-    Supplier<Double> zaxisRotateSupplier) {
-  m_drivetrain = drivetrain;
-  m_xaxisSpeedSupplier = xaxisSpeedSupplier;
-  m_zaxisRotateSupplier = zaxisRotateSupplier;
-  addRequirements(drivetrain);
-}
+public class IntakePopcornCommand extends Command {
+  /** Creates a new Practce. */
+
+    private final Intake m_Popcorn;
+
+    public IntakePopcornCommand (Intake m_Popcorn){
+       // m_Popcorn = new Intake();
+        this.m_Popcorn = m_Popcorn;
+        addRequirements(m_Popcorn);
+    }
+    public void PickUp(){
+        m_Popcorn.Intaking(0.1);
+    }
+    public void StopPickup(){
+        m_Popcorn.Intaking(0);
+    }
+    public void SpitItOut(){
+        m_Popcorn.Intaking(-0.1);
+    }
+    public void ArmUp(){
+        m_Popcorn.IntakeUpDown(0.1);
+    }
+    public void StopArm(){
+        m_Popcorn.IntakeUpDown(0);
+    }
+    public void ArmDown(){
+        m_Popcorn.IntakeUpDown(-0.1);
+    }
 
   // Called when the command is initially scheduled.
   @Override
@@ -33,9 +43,7 @@ public class ArcadeDrive extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get(), m_zaxisRotateSupplier.get());
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

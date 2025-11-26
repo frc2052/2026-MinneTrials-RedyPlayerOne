@@ -4,27 +4,29 @@
 
 package frc.robot.commands;
 
-import java.util.function.Supplier;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.DriveTrain;
-
+import frc.robot.subsystems.Shooter;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ArcadeDrive extends Command {
-  /** Creates a new ArcadeDrive. */
-  private final DriveTrain m_drivetrain;
-  private final Supplier<Double> m_xaxisSpeedSupplier;
-  private final Supplier<Double> m_zaxisRotateSupplier;
-  
-  public ArcadeDrive(
-    DriveTrain drivetrain,
-    Supplier<Double> xaxisSpeedSupplier,
-    Supplier<Double> zaxisRotateSupplier) {
-  m_drivetrain = drivetrain;
-  m_xaxisSpeedSupplier = xaxisSpeedSupplier;
-  m_zaxisRotateSupplier = zaxisRotateSupplier;
-  addRequirements(drivetrain);
+public class ShooterCommand extends Command {
+  /** Creates a new ShooterCommand. */
+  public class ShootingCommand {
+    private final Shooter m_shooter;
+    
+    public ShootingCommand(Shooter m_shooter){
+        this.m_shooter = m_shooter;
+        addRequirements(m_shooter);
+    }
+    public void ShootingOut(){
+      m_shooter.ShooterTop(0.1);
+      m_shooter.ShooterBottom(-0.1);
+    }
+    public void ShootingStop(){
+      m_shooter.ShooterTop(0);
+      m_shooter.ShooterBottom(0);
+    }
+
+    
 }
 
   // Called when the command is initially scheduled.
@@ -33,9 +35,7 @@ public class ArcadeDrive extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get(), m_zaxisRotateSupplier.get());
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
