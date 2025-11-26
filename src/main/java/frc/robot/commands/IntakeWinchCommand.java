@@ -11,30 +11,35 @@ import frc.robot.subsystems.IntakeSubsystem;
 public class IntakeWinchCommand extends Command {
   /** Creates a new IntakeWinchDown. */
   private final IntakeSubsystem intakeSubsystem;
-  private final Timer timer;
-  public IntakeWinchCommand(IntakeSubsystem intakeSubsystem, Timer timer) {
+  private final Timer timer = new Timer();
+  public IntakeWinchCommand(IntakeSubsystem intakeSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSubsystem = intakeSubsystem;
-    this.timer = timer;
     addRequirements(intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer.reset();
-    timer.start();
+    // timer.reset();
+    // timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(timer.get() <= 2){
+    // if(timer.get() <= 2){
+    //   intakeSubsystem.winchMoves(.5);
+    // } else {
+    //   intakeSubsystem.stopWinch();
+    // }
+
+    if (IntakeSubsystem.getMoveUp() == true){
       intakeSubsystem.winchMoves(.5);
-    } else {
-      intakeSubsystem.stopWinch();
-    }
+    }else {
+      intakeSubsystem.winchMoves(-.5);
   }
+}
 
   // Called once the command ends or is interrupted.
   @Override

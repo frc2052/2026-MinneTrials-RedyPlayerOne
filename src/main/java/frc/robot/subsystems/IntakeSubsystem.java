@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
@@ -17,11 +18,13 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsytem. */
   private final WPI_TalonSRX rollerMotor = new WPI_TalonSRX(IntakeConstants.ROLLER_MOTOR_ID);
   private final WPI_TalonSRX winchMotor = new WPI_TalonSRX(IntakeConstants.WINCH_MOTOR_ID);
+  public static boolean moveUp;
   public IntakeSubsystem() {
     rollerMotor.configFactoryDefault();
     winchMotor.configFactoryDefault();
     winchMotor.setNeutralMode(NeutralMode.Brake);
   }
+CurrentLimitsConfigs currentLimits = new CurrentLimitsConfigs();
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -40,5 +43,11 @@ public class IntakeSubsystem extends SubsystemBase {
   }
   public void stopWinch(){
     winchMotor.stopMotor();
+  }
+  public static void setMoveUp(boolean moveUp){
+    IntakeSubsystem.moveUp = moveUp;
+  }
+  public static boolean getMoveUp(){
+    return moveUp;
   }
 }

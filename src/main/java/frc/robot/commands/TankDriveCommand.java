@@ -14,8 +14,11 @@ public class TankDriveCommand extends Command {
   DrivetrainSubsystem drivetrain;
   Supplier<Double> leftSpeed;
   Supplier<Double> rightSpeed;
-  public TankDriveCommand() {
- 
+  public TankDriveCommand(DrivetrainSubsystem drivetrain, Supplier<Double> leftSpeed, Supplier<Double> rightSpeed) {
+    this.drivetrain = drivetrain;
+    this.leftSpeed = leftSpeed;
+    this.rightSpeed = rightSpeed;
+    addRequirements(drivetrain);
   }
 
   // Called when the command is initially scheduled.
@@ -24,7 +27,9 @@ public class TankDriveCommand extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    drivetrain.tankDrive(leftSpeed.get(), rightSpeed.get());
+  }
 
   // Called once the command ends or is interrupted.
   @Override
