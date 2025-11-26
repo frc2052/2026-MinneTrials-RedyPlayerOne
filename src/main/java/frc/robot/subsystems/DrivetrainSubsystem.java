@@ -11,13 +11,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DrivetrainConstants;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
-import com.kauailabs.navx.frc.AHRS;
+// import com.kauailabs.navx.frc.AHRS;
 
 public class DrivetrainSubsystem extends SubsystemBase {
     private final WPI_TalonSRX leftMotor = new WPI_TalonSRX(DrivetrainConstants.LEFT_MOTOR_ID);
@@ -26,11 +26,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
     // AHRS navxGyro;
     private final DifferentialDrive drive = new DifferentialDrive(leftMotor, rightMotor);
     private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(null, distanceToMeters(0), distanceToMeters(0), new Pose2d());
+    // public AHRS navxGyro;
   /** Creates a new DrivetrainSubsystem. */
   public DrivetrainSubsystem() {
-    navxGyro = new AHRS(SPI.Port.kMXP); // TODO: need SPI port? yep
-    navxGyro.enableLogging(true);
-    navxGyro.zeroYaw();
+    // navxGyro = new AHRS(SPI.Port.kMXP); // TODO: need SPI port? yep
+    // navxGyro.enableLogging(true);
+    // navxGyro.zeroYaw();
     leftMotor.configFactoryDefault();
     rightMotor.configFactoryDefault();
 
@@ -42,15 +43,29 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
   public void tankDrive(double leftSpeed, double rightSpeed) {
     drive.tankDrive(leftSpeed, rightSpeed);
+    drive.feed();
   }
   public void arcadeDrive(double fwd, double rot) {
     drive.arcadeDrive(fwd, rot);
+    drive.feed();
   }
   public void tankDriveVolts(double leftVoltage, double rightVoltage){
-    leftMotor.setVoltage(0);
-    rightMotor.setVoltage(0);
+    leftMotor.setVoltage(leftVoltage);
+    rightMotor.setVoltage(rightVoltage);
+    drive.feed();
   }
 
+  public Pose2d getPose(){
+    return odometry.getPoseMeters();
+  }
+
+  public void resetOdometry(Pose2d pose){
+    odometry.resetPose(pose);
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds(){
+    return new DifferentialDriveWheelSpeeds(distanceToMeters(leftMotor.getSelectedSensorVelocity()),distanceToMeters(rightMotor.getSelectedSensorVelocity()));
+  }
   public void stop() {
     drive.stopMotor();
   }
