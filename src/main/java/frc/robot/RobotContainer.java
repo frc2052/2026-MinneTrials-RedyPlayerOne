@@ -49,8 +49,8 @@ public class RobotContainer {
     // cancelling on release.
      JoystickButton intakePopcorn = new JoystickButton(joystick, 1);
      intakePopcorn
-        .onTrue(new InstantCommand(() -> m_IntakePopcornCommand.PickUp(),m_intake))
-        .onFalse(new InstantCommand(()-> m_IntakePopcornCommand.StopPickup(),m_intake));
+        .onTrue(new InstantCommand(() -> m_intake.Intaking(0.1),m_intake))
+        .onFalse(new InstantCommand(()-> m_intake.Intaking(0),m_intake));
     
   }
 
