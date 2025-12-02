@@ -11,12 +11,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {}
-  private WPI_TalonSRX roller_motor = new WPI_TalonSRX(2);
+  private WPI_TalonSRX roller_motor_top = new WPI_TalonSRX(0);
+  private WPI_TalonSRX roller_motor_bottom = new WPI_TalonSRX(0);
   private WPI_TalonSRX winch_motor = new WPI_TalonSRX(3);
 
 
-  public void roller(double roller_speed){
-      roller_motor.set(roller_speed);
+  public void roller(double top_roller_speed,double bottom_roller_speed){
+      roller_motor_top.set(top_roller_speed);
+      roller_motor_bottom.set(bottom_roller_speed);
   }
   public void winch(double winch_speed){
     winch_motor.set(winch_speed);

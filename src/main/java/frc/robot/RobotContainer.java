@@ -59,17 +59,18 @@ public class RobotContainer {
        .onTrue(new InstantCommand(() -> m_Shooter.shoot(0.1,-0.1), m_Shooter))
        .onFalse(new InstantCommand(() -> m_Shooter.shoot(0.0,0.0), m_Shooter));
 
-double roller_speed = 0.1;
+double roller_speed_top = 0.1;
+double roller_speed_bottom = -0.1;
 
    JoystickButton JoystickButtonRollerIn = new JoystickButton(m_controller, 3);
    JoystickButtonRollerIn
-      .onTrue(new InstantCommand(() -> m_Intake.roller(roller_speed), m_Intake))
-      .onFalse(new InstantCommand(() -> m_Intake.roller(0.0), m_Intake));
+      .onTrue(new InstantCommand(() -> m_Intake.roller(roller_speed_top,roller_speed_bottom), m_Intake))
+      .onFalse(new InstantCommand(() -> m_Intake.roller(0.0,0.0), m_Intake));
 
     JoystickButton JoystickButtonRollerOut = new JoystickButton(m_controller, 5);
     JoystickButtonRollerOut
-     .onTrue(new InstantCommand(() -> m_Intake.roller(-roller_speed), m_Intake))
-     .onFalse(new InstantCommand(() -> m_Intake.roller(0.0), m_Intake));
+     .onTrue(new InstantCommand(() -> m_Intake.roller(-roller_speed_top,-roller_speed_bottom), m_Intake))
+     .onFalse(new InstantCommand(() -> m_Intake.roller(0.0,0.0), m_Intake));
 
 double winch_speed = 0.1;
 
