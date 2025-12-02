@@ -15,8 +15,10 @@ public class Intake extends SubsystemBase {
   private WPI_TalonSRX winch_motor = new WPI_TalonSRX(3);
 
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  public void roller(double roller_speed){
+      roller_motor.set(roller_speed);
+  }
+  public void winch(double winch_speed){
+    winch_motor.set(winch_speed);
   }
 }

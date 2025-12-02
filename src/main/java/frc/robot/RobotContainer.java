@@ -8,12 +8,14 @@ import frc.robot.commands.Autos;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.commands.ArcadeDrive;
-
-
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -25,8 +27,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain m_Drivetrain = new Drivetrain();
-
-
+  private final Shooter m_Shooter = new Shooter();
+  private final Intake m_Intake = new Intake();
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Joystick m_controller = new Joystick(0);
 
@@ -48,10 +50,41 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     m_Drivetrain.setDefaultCommand(getArcadeDriveCommand());
-
+    
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
+
+    JoystickButton JoystickButtonShoot = new JoystickButton(m_controller, 1);
+    JoystickButtonShoot
+       .onTrue(new InstantCommand(() -> m_Shooter.shoot(0.1,-0.1), m_Shooter))
+       .onFalse(new InstantCommand(() -> m_Shooter.shoot(0.0,0.0), m_Shooter));
+
+double roller_speed = 0.1;
+
+   JoystickButton JoystickButtonRollerIn = new JoystickButton(m_controller, 3);
+   JoystickButtonRollerIn
+      .onTrue(new InstantCommand(() -> m_Intake.roller(roller_speed), m_Intake))
+      .onFalse(new InstantCommand(() -> m_Intake.roller(0.0), m_Intake));
+
+    JoystickButton JoystickButtonRollerOut = new JoystickButton(m_controller, 5);
+    JoystickButtonRollerOut
+     .onTrue(new InstantCommand(() -> m_Intake.roller(-roller_speed), m_Intake))
+     .onFalse(new InstantCommand(() -> m_Intake.roller(0.0), m_Intake));
+
+double winch_speed = 0.1;
+
+     JoystickButton JoystickButtonWinchUp = new JoystickButton(m_controller, 6);
+     JoystickButtonWinchUp
+        .onTrue(new InstantCommand(() -> m_Intake.winch(winch_speed), m_Intake))
+        .onFalse(new InstantCommand(() -> m_Intake.winch(0.0), m_Intake));
+
+      JoystickButton JoystickButtonWinchDown = new JoystickButton(m_controller, 4);
+      JoystickButtonWinchDown
+        .onTrue(new InstantCommand(() -> m_Intake.winch(-winch_speed), m_Intake))
+        .onFalse(new InstantCommand(() -> m_Intake.winch(0.0), m_Intake));
   }
+
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
