@@ -13,9 +13,11 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.Intake;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -28,11 +30,14 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 private final Joystick m_controller = new Joystick(0);
 private final DriveTrain m_driveTrain = new DriveTrain();
+private final Shooter m_Shooter = new Shooter();
+private final Intake m_Intake = new Intake();
+
 public Command getArcadeDriveCommand() {
    return new ArcadeDrive(
     m_driveTrain, () -> -m_controller.getRawAxis(1), () -> -m_controller.getRawAxis(5));
 
-    private final Shoot Shooter = new Shooter();
+    
 }
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -62,14 +67,42 @@ m_driveTrain.setDefaultCommand(getArcadeDriveCommand());
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
- 
 
 
     JoystickButton joystickAButton = new JoystickButton(m_controller, 1);
     joystickAButton
-        .onTrue(new InstantCommand(() -> Shooter.Shoot(45.0), Shooter))
-        .onFalse(new InstantCommand(() -> Shooter.Shoot(0.0), Shooter));
+        .onTrue(new InstantCommand(() -> m_Shooter.shoot(), m_Shooter))
+        .onFalse(new InstantCommand(() -> m_Shooter.shoot(), m_Shooter));
+
+double roller_speed = 0.1;
+double winch_speed = 0.1;
+        
+    JoystickButton joystickRollerIn = new JoystickButton(m_controller, 3);
+    joystickRollerIn
+        .onTrue(new InstantCommand(() -> m_Intake.roller(0.0), m_Intake))
+        .onFalse(new InstantCommand(() -> m_Intake.roller(0.0), m_Intake));
  
+        JoystickButton joystickRollerOut = new JoystickButton(m_controller, 5);
+        joystickRollerOut
+            .onTrue(new InstantCommand(() -> m_Intake.roller(0.0), m_Intake))
+            .onFalse(new InstantCommand(() -> m_Intake.roller(0.0), m_Intake));
+
+
+            JoystickButton joystickWinchUp = new JoystickButton(m_controller,6);
+    joystickWinchUp
+        .onTrue(new InstantCommand(() -> m_Intake.winch(0.0), m_Intake))
+        .onFalse(new InstantCommand(() -> m_Intake.winch(0.0), m_Intake));
+
+
+
+            JoystickButton joystickWinchDown = new JoystickButton(m_controller, 4);
+    joystickWinchDown
+        .onTrue(new InstantCommand(() -> m_Intake.winch(0.0), m_Intake))
+        .onFalse(new InstantCommand(() -> m_Intake.winch(0.0), m_Intake));
+
+
+
+
   }
 
 

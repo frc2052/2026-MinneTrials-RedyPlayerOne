@@ -8,10 +8,22 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 
 
-public class Intake {
+public class Intake extends SubsystemBase {
     
-    private WPI_TalonSRX roller_motor = new WPI_TalonSRX(0);
-    private WPI_TalonSRX winch_motor = new WPI_TalonSRX(1);
+    private WPI_TalonSRX roller_motor = new WPI_TalonSRX(2);
+    private WPI_TalonSRX winch_motor = new WPI_TalonSRX(3);
 
+public void roller(double roller_speed){
+roller_motor.set(roller_speed);
+}
+public void winch(double winch_speed){
+
+    winch_motor.set(winch_speed);
+}
 
 }
+
+
+
+
+
