@@ -19,15 +19,17 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.commands.ArcadeDriveCommand;
+import frc.robot.commands.IntakeButterCommand;
 import frc.robot.commands.IntakePopcornCommand;
 import frc.robot.commands.IntakeWinchCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.PathPlannerPath;
+// import com.pathplanner.lib.auto.AutoBuilder;
+// import com.pathplanner.lib.commands.PathPlannerAuto;
+// import com.pathplanner.lib.path.PathPlannerPath;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -39,26 +41,40 @@ public abstract class AutoBase extends SequentialCommandGroup {
   private final ShooterSubsystem shooter = new ShooterSubsystem();
 
   public AutoBase(){
-    AutoBuilder.configureRamsete(
-      drivetrain::getPose,
-      drivetrain::resetOdometry,
-      drivetrain::getWheelSpeeds,
-      drivetrain::tankDriveVolts,
-      drivetrain 
-      );
-      addRequirements(drivetrain,intake,shooter);
+    // AutoBuilder.configureRamsete(
+    //   drivetrain::getPose,
+    //   drivetrain::resetOdometry,
+    //   drivetrain::getWheelSpeeds,
+    //   drivetrain::tankDriveVolts,
+    //   drivetrain 
+    //   );
+    //   addRequirements(drivetrain,intake,shooter);
   }
 
-  public Command followPath(String path){
-    return AutoBuilder.followPath(PathPlannerPath.fromPathFile(path));
-  }
+  // public Command followPath(String path){
+  //   return AutoBuilder.followPath(PathPlannerPath.fromPathFile(path));
+  // }
 
+  public Command moveSetDistanceForward(double distance, double speed){
+    return new SequentialCommandGroup(new ArcadeDriveCommand(drivetrain, ()-> speed, null).until(()->(drivetrain.getPose().getTranslation().getX() >= distance)),    new InstantCommand(()-> drivetrain.resetOdometry(new Pose2d(new Translation2d(0,0), drivetrain.getPose().getRotation()))));
+  }
+  public Command moveSetDistanceBackwards(double distance, double speed){
+    return new SequentialCommandGroup(new ArcadeDriveCommand(drivetrain, ()-> speed, null).until(()->(drivetrain.getPose().getTranslation().getX() <= -distance)),    new InstantCommand(()-> drivetrain.resetOdometry(new Pose2d(new Translation2d(0,0), drivetrain.getPose().getRotation()))));
+  }
+  public Command turnToAngle(double angle, double speed){
+  if((angle - drivetrain.getPose().getRotation().getDegrees())>= 0){
+    return new SequentialCommandGroup( new ArcadeDriveCommand(drivetrain, null, ()-> speed).until(()->(drivetrain.getPose().getRotation().getDegrees() >= angle)),new InstantCommand(()-> drivetrain.resetOdometry(new Pose2d(new Translation2d(0,0), drivetrain.getPose().getRotation()))));
+  }
+  else{
+    return new SequentialCommandGroup( new ArcadeDriveCommand(drivetrain, null, ()-> -speed).until(()->(drivetrain.getPose().getRotation().getDegrees() >= angle)),new InstantCommand(()-> drivetrain.resetOdometry(new Pose2d(new Translation2d(0,0), drivetrain.getPose().getRotation()))));
+  } 
+ }
   public Command intakePopcorn (){
     return new IntakePopcornCommand(intake).withTimeout(0);
   }
 
   public Command intakeButter (){
-    return new IntakePopcornCommand(intake).withTimeout(0);
+    return new IntakeButterCommand(intake).withTimeout(0);
   }
 
   public Command shooter(){
@@ -68,6 +84,12 @@ public abstract class AutoBase extends SequentialCommandGroup {
   public Command winchUp(){
     addCommands(new InstantCommand(()-> intake.setMoveUp(true)));
     return new IntakeWinchCommand(intake).withTimeout(0);
+  }
+  public Command outtakeButter(){
+    return new IntakePopcornCommand(intake).withTimeout(0);
+  }
+  public Command outtakePopcorn(){
+    return new IntakeButterCommand(intake).withTimeout(0);
   }
 
   public Command winchDown(){
