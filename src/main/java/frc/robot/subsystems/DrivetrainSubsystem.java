@@ -17,7 +17,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DrivetrainConstants;
-// import com.kauailabs.navx.frc.AHRS;
+import com.studica.frc.AHRS;
+import com.studica.frc.AHRS.NavXComType;
 
 public class DrivetrainSubsystem extends SubsystemBase {
     private final WPI_TalonSRX leftMotor = new WPI_TalonSRX(DrivetrainConstants.LEFT_MOTOR_ID);
@@ -25,13 +26,15 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     // AHRS navxGyro;
     private final DifferentialDrive drive = new DifferentialDrive(leftMotor, rightMotor);
-    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(null, distanceToMeters(0), distanceToMeters(0), new Pose2d());
-    // public AHRS navxGyro;
+    final DifferentialDriveOdometry odometry;
+    public AHRS navxGyro;
   /** Creates a new DrivetrainSubsystem. */
   public DrivetrainSubsystem() {
-    // navxGyro = new AHRS(SPI.Port.kMXP); // TODO: need SPI port? yep
-    // navxGyro.enableLogging(true);
-    // navxGyro.zeroYaw();
+    navxGyro = new AHRS(NavXComType.kMXP_SPI);
+    navxGyro.enableLogging(true);
+    navxGyro.zeroYaw();
+    odometry = new DifferentialDriveOdometry(navxGyro.getRotation2d(), distanceToMeters(leftMotor.getSelectedSensorPosition()), distanceToMeters(rightMotor.getSelectedSensorPosition())); 
+
     leftMotor.configFactoryDefault();
     rightMotor.configFactoryDefault();
 
@@ -72,7 +75,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler 
-   odometry.update(null, distanceToMeters(leftMotor.getSelectedSensorPosition()), distanceToMeters(rightMotor.getSelectedSensorPosition())); 
+   odometry.update(navxGyro.getRotation2d(), distanceToMeters(leftMotor.getSelectedSensorPosition()), distanceToMeters(rightMotor.getSelectedSensorPosition())); 
   }
 
   public double distanceToMeters(double position){
