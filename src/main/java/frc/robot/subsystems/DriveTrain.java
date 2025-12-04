@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 public class DriveTrain extends SubsystemBase {
   /** Creates a new DriveTrain. */
   public DriveTrain() {}
-
   private WPI_TalonSRX left_motor = new WPI_TalonSRX(0);
   private WPI_TalonSRX right_motor = new WPI_TalonSRX(1);
 
