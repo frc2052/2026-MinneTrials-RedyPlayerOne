@@ -29,7 +29,7 @@ public class RobotContainer {
   }
   private void configureBindings() {
     drivetrain.setDefaultCommand(
-      new ArcadeDriveCommand(drivetrain, joystick1::getY, joystick2::getX
+      new ArcadeDriveCommand(drivetrain, joystick2::getX, joystick1::getY
       )
     );
     JoystickButton popcornIntake = new JoystickButton(joystick1, 1);

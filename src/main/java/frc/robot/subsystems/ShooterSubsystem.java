@@ -7,20 +7,21 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
-private final WPI_TalonSRX topShootMotor;
-private final WPI_TalonSRX bottomShootMotor;
+private final VictorSPX topShootMotor;
+private final VictorSPX bottomShootMotor;
   public ShooterSubsystem() {
-    topShootMotor = new WPI_TalonSRX(Constants.ShooterConstants.TOP_SHOOT_MOTOR_ID);
+    topShootMotor = new VictorSPX(Constants.ShooterConstants.TOP_SHOOT_MOTOR_ID);
     topShootMotor.configFactoryDefault();
     topShootMotor.setNeutralMode(NeutralMode.Coast);
     topShootMotor.configFactoryDefault();
 
-    bottomShootMotor = new WPI_TalonSRX(Constants.ShooterConstants.BOTTOM_SHOOT_MOTOR_ID);
+    bottomShootMotor = new VictorSPX(Constants.ShooterConstants.BOTTOM_SHOOT_MOTOR_ID);
     bottomShootMotor.configFactoryDefault();
     bottomShootMotor.setNeutralMode(NeutralMode.Coast);
     bottomShootMotor.setInverted(true);
@@ -37,7 +38,7 @@ private final WPI_TalonSRX bottomShootMotor;
   }
 
   public void stopMotor() {
-    topShootMotor.stopMotor();
-    bottomShootMotor.stopMotor();
+    topShootMotor.set(VictorSPXControlMode.PercentOutput, 0);
+    bottomShootMotor.set(VictorSPXControlMode.PercentOutput, 0);
   }
 }
