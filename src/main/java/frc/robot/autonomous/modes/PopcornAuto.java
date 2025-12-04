@@ -16,9 +16,10 @@ public class PopcornAuto extends AutoBase {
           public void init() {
               addCommands(moveSetDistanceForward(0.8,0.5));
               addCommands(turnToAngle(90,0.5));
-              addCommands(shooter());   
+              addCommands(shooter(1.0));   
               addCommands(turnToAngle(0,0.5));
-              addCommands(moveSetDistanceForward(0.2,0.5));              
-              addCommands(outtakeButter());
+              addCommands(moveSetDistanceForward(0.2,0.5)); 
+              addCommands(winchUp(0.2));             
+              addCommands(outtakeButter(0.4));
             }
 }

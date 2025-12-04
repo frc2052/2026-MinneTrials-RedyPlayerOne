@@ -42,5 +42,8 @@ public final class Constants {
   public static class IntakeConstants {
     public static final int ROLLER_MOTOR_ID = 2;
     public static final int WINCH_MOTOR_ID = 3;
+    public static final double intakeSpeedPopcorn = 0;
+    public static final double intakeSpeedButter = 0;
+
   }
 }

@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class IntakePopcornCommand extends Command {
@@ -21,7 +22,7 @@ public class IntakePopcornCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSubsystem.intakePopcorn(0.1);
+    intakeSubsystem.intakePopcorn(Constants.IntakeConstants.intakeSpeedPopcorn);
   }
   // Called once the command ends or is interrupted.
   @Override

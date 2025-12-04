@@ -69,32 +69,32 @@ public abstract class AutoBase extends SequentialCommandGroup {
     return new SequentialCommandGroup( new ArcadeDriveCommand(drivetrain, null, ()-> -speed).until(()->(drivetrain.getPose().getRotation().getDegrees() >= angle)),new InstantCommand(()-> drivetrain.resetOdometry(new Pose2d(new Translation2d(0,0), drivetrain.getPose().getRotation()))));
   } 
  }
-  public Command intakePopcorn (){
-    return new IntakePopcornCommand(intake).withTimeout(0);
+  public Command intakePopcorn (double timeOut){
+    return new IntakePopcornCommand(intake).withTimeout(timeOut);
   }
 
-  public Command intakeButter (){
-    return new IntakeButterCommand(intake).withTimeout(0);
+  public Command intakeButter (double timeOut){
+    return new IntakeButterCommand(intake).withTimeout(timeOut);
   }
 
-  public Command shooter(){
-    return new ShooterCommand(shooter).withTimeout(0);
+  public Command shooter(double timeOut){
+    return new ShooterCommand(shooter).withTimeout(timeOut);
   }
 
-  public Command winchUp(){
+  public Command winchUp(double timeOut){
     addCommands(new InstantCommand(()-> intake.setMoveUp(true)));
-    return new IntakeWinchCommand(intake).withTimeout(0);
+    return new IntakeWinchCommand(intake).withTimeout(timeOut);
   }
-  public Command outtakeButter(){
-    return new IntakePopcornCommand(intake).withTimeout(0);
+  public Command outtakeButter(double timeOut){
+    return new IntakePopcornCommand(intake).withTimeout(timeOut);
   }
-  public Command outtakePopcorn(){
-    return new IntakeButterCommand(intake).withTimeout(0);
+  public Command outtakePopcorn(double timeOut){
+    return new IntakeButterCommand(intake).withTimeout(timeOut);
   }
 
-  public Command winchDown(){
+  public Command winchDown(double timeOut){
     addCommands(new InstantCommand(()-> intake.setMoveUp(false)));
-    return new IntakeWinchCommand(intake).withTimeout(0);
+    return new IntakeWinchCommand(intake).withTimeout(timeOut);
   }
 
   
