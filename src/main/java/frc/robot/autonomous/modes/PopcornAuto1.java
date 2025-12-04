@@ -7,13 +7,14 @@ package frc.robot.autonomous.modes;
 import frc.robot.autonomous.common.AutoBase;
 
 /** Add your docs here. */
-public class PopcornAuto extends AutoBase {
-        public PopcornAuto() {
+public class PopcornAuto1 extends AutoBase {
+        public PopcornAuto1() {
               super();
               
           }
       
-          public void init() {
+          public void init()  {
+            //TBD estimated values 
               addCommands(moveSetDistanceForward(0.8,0.5));
               addCommands(turnToAngle(90,0.5));
               addCommands(shooter(1.0));   

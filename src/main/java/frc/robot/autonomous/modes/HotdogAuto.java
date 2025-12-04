@@ -19,7 +19,7 @@ public class HotdogAuto extends AutoBase {
     }
 
     public void init() {
-        addCommands( moveSetDistanceForward(1,0.5));
+        addCommands(moveSetDistanceForward(1,0.5));
     }
 
     

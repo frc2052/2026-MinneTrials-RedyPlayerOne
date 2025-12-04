@@ -15,7 +15,7 @@ public class ButterAuto extends AutoBase {
       
           public void init() {
               addCommands(moveSetDistanceForward(1,0.5));
-              addCommands(winchUp(0.4));
+              addCommands(winchUp(0.4)); // will be changed
               addCommands(outtakeButter(0.2));
               addCommands(moveSetDistanceBackwards(0.2,0.5));
               addCommands(turnToAngle(90,0.5));
