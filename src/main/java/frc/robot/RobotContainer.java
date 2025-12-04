@@ -4,51 +4,43 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.commands.ArcadeDriveCommand;
+import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.IntakePopcornCommand;
+import frc.robot.commands.WinchDownCommand;
+import frc.robot.commands.WinchUpCommand;
+import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
-
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
+  private final ShooterSubsystem shooter = new ShooterSubsystem();
+  private final IntakeSubsystem intake = new IntakeSubsystem(); 
+  private final Joystick joystick1 = new Joystick(0);
+  private final Joystick joystick2 = new Joystick(1);
+  
   public RobotContainer() {
-    // Configure the trigger bindings
     configureBindings();
   }
-
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    drivetrain.setDefaultCommand(
+      new ArcadeDriveCommand(drivetrain, joystick1::getY, joystick2::getX
+      )
+    );
+    JoystickButton popcornIntake = new JoystickButton(joystick1, 1);
+    popcornIntake.whileTrue(new IntakePopcornCommand(intake));
+    JoystickButton winchUp = new JoystickButton(joystick1, 3);
+    winchUp.whileTrue(new WinchUpCommand(intake));
+    JoystickButton winchDown = new JoystickButton(joystick1, 4);
+    winchDown.whileTrue(new WinchDownCommand(intake));
+    
+    JoystickButton shoot = new JoystickButton(joystick2, 1);
+    shoot.whileTrue(new ShooterCommand(shooter));
   }
 
   /**
@@ -58,6 +50,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return null;
   }
 }
