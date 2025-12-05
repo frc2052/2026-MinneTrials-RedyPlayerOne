@@ -22,8 +22,9 @@ import frc.robot.Constants;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.IntakeButterCommand;
 import frc.robot.commands.IntakePopcornCommand;
-import frc.robot.commands.IntakeWinchCommand;
 import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.WinchDownCommand;
+import frc.robot.commands.WinchUpCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -82,8 +83,7 @@ public abstract class AutoBase extends SequentialCommandGroup {
   }
 
   public Command winchUp(double timeOut){
-    addCommands(new InstantCommand(()-> intake.setMoveUp(true)));
-    return new IntakeWinchCommand(intake).withTimeout(timeOut);
+    return new WinchUpCommand(intake).withTimeout(timeOut);
   }
   public Command outtakeButter(double timeOut){
     return new IntakePopcornCommand(intake).withTimeout(timeOut);
@@ -93,8 +93,7 @@ public abstract class AutoBase extends SequentialCommandGroup {
   }
 
   public Command winchDown(double timeOut){
-    addCommands(new InstantCommand(()-> intake.setMoveUp(false)));
-    return new IntakeWinchCommand(intake).withTimeout(timeOut);
+    return new WinchDownCommand(intake).withTimeout(timeOut);
   }
 
   
