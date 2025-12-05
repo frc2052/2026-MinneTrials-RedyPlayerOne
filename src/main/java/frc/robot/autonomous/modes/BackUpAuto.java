@@ -21,7 +21,7 @@ public class BackUpAuto extends AutoBase {
     }
 
     public void init() {
-         addCommands( new ArcadeDriveCommand(new DrivetrainSubsystem(),()-> 0.5,()-> 0.0).withSetTimeout(1.0));
+         addCommands( new ArcadeDriveCommand(new DrivetrainSubsystem(),()-> 0.5,()-> 0.0).withTimeout(1.0));
     }
 
     
