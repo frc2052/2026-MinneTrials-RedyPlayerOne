@@ -9,10 +9,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -23,14 +21,12 @@ import com.studica.frc.AHRS.NavXComType;
 public class DrivetrainSubsystem extends SubsystemBase {
     private final WPI_TalonSRX leftMotor = new WPI_TalonSRX(DrivetrainConstants.LEFT_MOTOR_ID);
     private final WPI_TalonSRX rightMotor = new WPI_TalonSRX(DrivetrainConstants.RIGHT_MOTOR_ID);
+    private final AHRS navxGyro = new AHRS(NavXComType.kMXP_SPI);
 
-    // AHRS navxGyro;
     private final DifferentialDrive drive = new DifferentialDrive(leftMotor, rightMotor);
     final DifferentialDriveOdometry odometry;
-    public AHRS navxGyro;
   /** Creates a new DrivetrainSubsystem. */
   public DrivetrainSubsystem() {
-    navxGyro = new AHRS(NavXComType.kMXP_SPI);
     navxGyro.enableLogging(true);
     navxGyro.zeroYaw();
     odometry = new DifferentialDriveOdometry(navxGyro.getRotation2d(), distanceToMeters(leftMotor.getSelectedSensorPosition()), distanceToMeters(rightMotor.getSelectedSensorPosition())); 
@@ -43,10 +39,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     leftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, DrivetrainConstants.VELOCITY_CONTROL_SLOT, DrivetrainConstants.CAN_TIMEOUT);
     rightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, DrivetrainConstants.VELOCITY_CONTROL_SLOT, DrivetrainConstants.CAN_TIMEOUT);
- 
-
-    leftMotor.setInverted(true);
-    rightMotor.setInverted(false);
   }
   public void tankDrive(double leftSpeed, double rightSpeed) {
     drive.tankDrive(leftSpeed, rightSpeed);

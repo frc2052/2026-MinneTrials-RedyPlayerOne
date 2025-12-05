@@ -7,10 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
-public class IntakeButterCommand extends Command {
+
+public class WinchDownCommand extends Command {
   private final IntakeSubsystem intakeSubsystem;
 
-  public IntakeButterCommand(IntakeSubsystem intakeSubsystem) {
+  public WinchDownCommand(IntakeSubsystem intakeSubsystem) {
     this.intakeSubsystem = intakeSubsystem;
     addRequirements(intakeSubsystem);
   }
@@ -22,13 +23,13 @@ public class IntakeButterCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSubsystem.setIntakeSpeed(IntakeConstants.BUTTER_SPEED);
+    intakeSubsystem.setWinchSpeed(IntakeConstants.WINCH_DOWN_SPEED);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeSubsystem.stopRoller();
+    intakeSubsystem.stopWinch();
   }
 
   // Returns true when the command should end.

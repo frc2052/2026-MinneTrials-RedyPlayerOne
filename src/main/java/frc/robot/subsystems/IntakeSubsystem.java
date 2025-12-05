@@ -5,49 +5,37 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
-// Clockwise RollerMotor to intake popcorn/outake butter and counterclockwise RollerMotorto outtake popcorn/intake butter
-// WinchMotor to raise and lower intake arm -- basically an indexer -- brings it down to the shooter. 
-// Toggle it, winch to raise and lower; Neutral.Brake on winch motor to hold position
 public class IntakeSubsystem extends SubsystemBase {
-  /** Creates a new IntakeSubsytem. */
   private final WPI_TalonSRX rollerMotor = new WPI_TalonSRX(IntakeConstants.ROLLER_MOTOR_ID);
   private final WPI_TalonSRX winchMotor = new WPI_TalonSRX(IntakeConstants.WINCH_MOTOR_ID);
-  public static boolean moveUp;
   public IntakeSubsystem() {
     rollerMotor.configFactoryDefault();
     winchMotor.configFactoryDefault();
     winchMotor.setNeutralMode(NeutralMode.Brake);
   }
-CurrentLimitsConfigs currentLimits = new CurrentLimitsConfigs();
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  public void intakePopcorn(double speed){
+  public void setIntakeSpeed(double speed) {
     rollerMotor.set(speed);
   }
-  public void intakeButter(double speed){
-    rollerMotor.set(-speed);
-  }
-  public void stopRoller(){
+
+  public void stopRoller() {
     rollerMotor.stopMotor();
   }
-  public void winchMoves(double speed){
+
+  public void setWinchSpeed(double speed) {
     winchMotor.set(speed);
   }
-  public void stopWinch(){
+
+  public void stopWinch() {
     winchMotor.stopMotor();
-  }
-  public static void setMoveUp(boolean moveUp){
-    IntakeSubsystem.moveUp = moveUp;
-  }
-  public static boolean getMoveUp(){
-    return moveUp;
   }
 }

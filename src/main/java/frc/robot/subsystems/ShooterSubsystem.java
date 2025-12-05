@@ -12,29 +12,32 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
-  /** Creates a new ShooterSubsystem. */
-private final WPI_TalonSRX botShootMotor;
 private final WPI_TalonSRX topShootMotor;
+private final WPI_TalonSRX bottomShootMotor;
   public ShooterSubsystem() {
-    botShootMotor = new WPI_TalonSRX(Constants.ShooterConstants.BOT_SHOOT_MOTOR_ID);
-    botShootMotor.setNeutralMode(NeutralMode.Brake);
-    botShootMotor.setInverted(true);
-    botShootMotor.configFactoryDefault();
     topShootMotor = new WPI_TalonSRX(Constants.ShooterConstants.TOP_SHOOT_MOTOR_ID);
-    topShootMotor.setNeutralMode(NeutralMode.Brake);
     topShootMotor.configFactoryDefault();
+    topShootMotor.setNeutralMode(NeutralMode.Coast);
+    topShootMotor.configFactoryDefault();
+
+    bottomShootMotor = new WPI_TalonSRX(Constants.ShooterConstants.BOTTOM_SHOOT_MOTOR_ID);
+    bottomShootMotor.configFactoryDefault();
+    bottomShootMotor.setNeutralMode(NeutralMode.Coast);
+    bottomShootMotor.setInverted(true);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  public void setSpeed(double speed){
-    botShootMotor.set(ControlMode.PercentOutput, speed);
-    topShootMotor.set(ControlMode.PercentOutput, speed);
+
+  public void setSpeed(double tSpeed, double bSpeed) {
+    topShootMotor.set(ControlMode.PercentOutput, tSpeed);
+    bottomShootMotor.set(ControlMode.PercentOutput, bSpeed);
   }
-  public void stopMotor(){
-    botShootMotor.stopMotor();
+
+  public void stopMotor() {
     topShootMotor.stopMotor();
+    bottomShootMotor.stopMotor();
   }
 }
