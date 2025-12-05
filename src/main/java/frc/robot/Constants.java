@@ -35,13 +35,13 @@ public final class Constants {
     public static final int WINCH_MOTOR_ID = 3; //
     public static final double POPCORN_SPEED = 0.7;
     public static final double BUTTER_SPEED = -0.7;
-    public static final double WINCH_UP_SPEED = 0.7;
+    public static final double WINCH_UP_SPEED = 0.8;
     public static final double WINCH_DOWN_SPEED = -0.7;
   }
   public static class ShooterConstants {
-    public static final int BOTTOM_SHOOT_MOTOR_ID = 4; //
-    public static final int TOP_SHOOT_MOTOR_ID = 5; //
+    public static final int BOTTOM_SHOOT_MOTOR_ID = 5; //
+    public static final int TOP_SHOOT_MOTOR_ID = 4; //
     public static final double TOP_SHOOTER_SPEED = 0.7;
-    public static final double BOTTOM_SHOOTER_SPEED = 0.7;
+    public static final double BOTTOM_SHOOTER_SPEED = 0.0;
   }
 }

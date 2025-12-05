@@ -29,17 +29,17 @@ public class RobotContainer {
   }
   private void configureBindings() {
     drivetrain.setDefaultCommand(
-      new ArcadeDriveCommand(drivetrain, joystick2::getX, joystick1::getY
+      new ArcadeDriveCommand(drivetrain, joystick1::getX, joystick1::getY
       )
     );
-    JoystickButton popcornIntake = new JoystickButton(joystick1, 1);
-    popcornIntake.whileTrue(new IntakePopcornCommand(intake));
+    // JoystickButton popcornIntake = new JoystickButton(joystick1, 1);
+    // popcornIntake.whileTrue(new IntakePopcornCommand(intake));
     JoystickButton winchUp = new JoystickButton(joystick1, 3);
     winchUp.whileTrue(new WinchUpCommand(intake));
     JoystickButton winchDown = new JoystickButton(joystick1, 4);
     winchDown.whileTrue(new WinchDownCommand(intake));
     
-    JoystickButton shoot = new JoystickButton(joystick2, 1);
+    JoystickButton shoot = new JoystickButton(joystick1, 1);
     shoot.whileTrue(new ShooterCommand(shooter));
   }
 
