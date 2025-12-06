@@ -36,7 +36,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     leftMotor.setNeutralMode(NeutralMode.Brake);
     rightMotor.setNeutralMode(NeutralMode.Brake);
-
+    leftMotor.setInverted(true);
     leftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, DrivetrainConstants.VELOCITY_CONTROL_SLOT, DrivetrainConstants.CAN_TIMEOUT);
     rightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, DrivetrainConstants.VELOCITY_CONTROL_SLOT, DrivetrainConstants.CAN_TIMEOUT);
   }

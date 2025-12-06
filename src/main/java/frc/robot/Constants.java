@@ -42,6 +42,6 @@ public final class Constants {
     public static final int BOTTOM_SHOOT_MOTOR_ID = 5; //
     public static final int TOP_SHOOT_MOTOR_ID = 4; //
     public static final double TOP_SHOOTER_SPEED = 0.7;
-    public static final double BOTTOM_SHOOTER_SPEED = 0.0;
+    public static final double BOTTOM_SHOOTER_SPEED = 0.3;
   }
 }

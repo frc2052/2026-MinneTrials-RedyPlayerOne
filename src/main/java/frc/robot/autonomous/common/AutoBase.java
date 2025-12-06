@@ -49,7 +49,7 @@ public abstract class AutoBase extends SequentialCommandGroup {
     //   drivetrain::tankDriveVolts,
     //   drivetrain 
     //   );
-    //   addRequirements(drivetrain,intake,shooter);
+      addRequirements(drivetrain,intake,shooter);
   }
 
   // public Command followPath(String path){
@@ -57,6 +57,7 @@ public abstract class AutoBase extends SequentialCommandGroup {
   // }
 
   public Command moveSetDistanceForward(double distance, double speed){
+    System.out.println("======= calling move distance command");
     return new SequentialCommandGroup(new ArcadeDriveCommand(drivetrain, ()-> speed, null).until(()->(drivetrain.getPose().getTranslation().getX() >= distance)),    new InstantCommand(()-> drivetrain.resetOdometry(new Pose2d(new Translation2d(0,0), drivetrain.getPose().getRotation()))));
   }
   public Command moveSetDistanceBackwards(double distance, double speed){
