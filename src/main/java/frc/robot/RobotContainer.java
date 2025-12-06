@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RobotContainer {
@@ -38,15 +39,15 @@ public class RobotContainer {
   }
   private void configureBindings() {
     drivetrain.setDefaultCommand(
-      new ArcadeDriveCommand(drivetrain, joystick2::getY, joystick1::getX
-      )
+      new ArcadeDriveCommand(drivetrain, joystick1::getY, joystick2::getX
+      ) //Comment 
     );
-    JoystickButton popcornIntake = new JoystickButton(joystick2, 1);
+    JoystickButton popcornIntake = new JoystickButton(joystick1, 1);
     popcornIntake.whileTrue(new IntakePopcornCommand(intake));
-    JoystickButton winchUp = new JoystickButton(joystick2, 3);
-    winchUp.whileTrue(new WinchUpCommand(intake));
-    JoystickButton winchDown = new JoystickButton(joystick2, 4);
-    winchDown.whileTrue(new WinchDownCommand(intake));
+    // JoystickButton winchUp = new JoystickButton(joystick2, 3);
+    // winchUp.whileTrue(new WinchUpCommand(intake));
+    // JoystickButton winchDown = new JoystickButton(joystick2, 4);
+    // winchDown.whileTrue(new WinchDownCommand(intake));
 
     JoystickButton sWinchUp = new JoystickButton(buttonPanel, 3);
     sWinchUp.whileTrue(new WinchUpCommand(intake));
@@ -54,7 +55,7 @@ public class RobotContainer {
     sWinchDown.whileTrue(new WinchDownCommand(intake));
 
     
-    JoystickButton shoot = new JoystickButton(joystick1, 1);
+    JoystickButton shoot = new JoystickButton(joystick2, 1);
     shoot.whileTrue(new ShooterCommand(shooter));
     // shoot.onFalse(new InstantCommand());
   }
@@ -68,7 +69,57 @@ public class RobotContainer {
 
     // An example command will be run in autonomous
     // return new ArcadeDriveCommand(drivetrain, ()-> 0.60, ()-> 0.0).withTimeout(1.3);// TODO: the robot is moving in the direction of the shooter
-    // return new SequentialCommandGroup(new ArcadeDriveCommand(drivetrain, ()-> 0.50, ()->0.0).withTimeout(3),new WinchUpCommand(intake).withTimeout(1), new ShooterCommand(shooter).withTimeout(5));
-    return new SequentialCommandGroup(new ArcadeDriveCommand(drivetrain, ()->0.5, ()-> 0.0).withTimeout(3),new ParallelCommandGroup(new ShooterCommand(shooter),new WiggleCommand(intake)).withTimeout(10));
+    
+    
+    // return new SequentialCommandGroup(
+    //   new ArcadeDriveCommand(drivetrain, ()-> 0.50, ()->0.0).withTimeout(0.5), //4.5
+    //   new WinchUpCommand(intake).withTimeout(.5),
+    //   new ParallelCommandGroup(
+    //     new ShooterCommand(shooter),
+    //     new WiggleCommand(intake).repeatedly()
+    //   ).withTimeout(5),
+    //   new InstantCommand(() -> intake.stopRoller())
+    //   );
+
+    // AUTOS :
+
+    // return new SequentialCommandGroup(
+    //   new ArcadeDriveCommand(drivetrain, ()->0.5, ()-> 0.0).withTimeout(3),
+    //   new WinchUpCommand(intake).withTimeout(.5),
+    //   new ParallelCommandGroup(
+    //     new ShooterCommand(shooter),
+    //     new WiggleCommand(intake).repeatedly()
+    //   ).withTimeout(5),
+    //   new InstantCommand(() -> intake.stopRoller())
+    //   );
+
+
+    // return new SequentialCommandGroup(
+    //   new ArcadeDriveCommand(drivetrain, ()-> 0.55, ()->0.0).withTimeout(6.5),
+    //   new WinchUpCommand(intake).withTimeout(.5),
+    //   new ParallelCommandGroup(
+    //     new ShooterCommand(shooter),
+    //     new WiggleCommand(intake).repeatedly()
+    //   ).withTimeout(5),
+    //   new InstantCommand(() -> intake.stopRoller())
+
+
+
+    return new SequentialCommandGroup(
+      new ArcadeDriveCommand(drivetrain, ()-> 0.55, ()->0.0).withTimeout(6.5),
+      new ArcadeDriveCommand(drivetrain, ()-> -0.55, ()->0.0).withTimeout(.4),
+      // new WinchUpCommand(intake).withTimeout(.5),
+      new ParallelCommandGroup(
+        new ShooterCommand(shooter),
+        new InstantCommand(() -> intake.setIntakeSpeed(0.7)),
+        new SequentialCommandGroup(
+          new WaitCommand(3),
+          new WinchDownCommand(intake).withTimeout(.5),
+          new WinchUpCommand(intake).withTimeout(.5)
+        )
+      ).withTimeout(8),
+      new InstantCommand(() -> intake.stopRoller())
+    );
+
   }
 }
