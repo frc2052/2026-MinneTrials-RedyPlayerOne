@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ShooterSubsystem extends SubsystemBase {
 private final VictorSPX topShootMotor;
 private final VictorSPX bottomShootMotor;
-private static boolean shooterRunning;
+private static boolean shooterRunning = false;
 
   public ShooterSubsystem() {
     topShootMotor = new VictorSPX(Constants.ShooterConstants.TOP_SHOOT_MOTOR_ID);

@@ -33,19 +33,21 @@ public class DriveDistanceCommand extends Command {
   @Override
   public void initialize() {
     drive.resetOdometry(new Pose2d(new Translation2d(0,0),drive.getPose().getRotation()));
+    drive.arcadeDrive(0.0, 0.0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    new ArcadeDriveCommand(drive, ()-> fwd, ()-> rot);
+    // new ArcadeDriveCommand(drive, ()-> fwd, ()-> rot);
+    drive.arcadeDrive(fwd, rot);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    new ArcadeDriveCommand(drive, ()-> 0.0, ()-> 0.0);
-
+    // new ArcadeDriveCommand(drive, ()-> 0.0, ()-> 0.0);
+    drive.arcadeDrive(0.0, 0.0);
   }
 
   // Returns true when the command should end.

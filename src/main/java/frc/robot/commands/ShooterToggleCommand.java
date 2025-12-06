@@ -20,12 +20,13 @@ public class ShooterToggleCommand extends Command {
   @Override
   public void initialize() {
     if (!shooterSubsystem.getShooterRunning()){
+      System.out.println("shooter1"+shooterSubsystem.getShooterRunning());
       shooterSubsystem.setSpeed(ShooterConstants.TOP_SHOOTER_SPEED, -ShooterConstants.BOTTOM_SHOOTER_SPEED);
-      
-      }else{
+    }else{
+      System.out.println("shooter2"+shooterSubsystem.getShooterRunning());
         shooterSubsystem.stopMotor();
-      }
-      System.out.println("shooter"+shooterSubsystem.getShooterRunning());
+    }
+      System.out.println("shooter3"+shooterSubsystem.getShooterRunning());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,7 +38,6 @@ public class ShooterToggleCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooterSubsystem.stopMotor();
   }
 
   // Returns true when the command should end.
