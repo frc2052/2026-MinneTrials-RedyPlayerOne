@@ -5,11 +5,11 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class Shooter extends SubsystemBase{
-  private WPI_TalonSRX top_motor = new WPI_TalonSRX(4);
-  private WPI_TalonSRX bottom_motor = new WPI_TalonSRX(5);
+  private WPI_VictorSPX top_motor = new WPI_VictorSPX(4);
+  private WPI_VictorSPX bottom_motor = new WPI_VictorSPX(5);
 
 
   public void shoot(double top_speed, double bottom_speed){

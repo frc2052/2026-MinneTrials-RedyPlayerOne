@@ -6,13 +6,14 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {}
   private WPI_TalonSRX roller_motor = new WPI_TalonSRX(2);//maybe 6 instead
-  private WPI_TalonSRX winch_motor = new WPI_TalonSRX(3);
+  private WPI_VictorSPX winch_motor = new WPI_VictorSPX(3);
 
 
   public void roller(double roller_speed){
