@@ -37,8 +37,6 @@ public class RobotContainer {
   private final DriveTrain drivetrain = new DriveTrain();
   private final Shooter m_shooter = new Shooter();
   private final Intake m_intake = new Intake();
-  private final IntakePopcornCommand m_IntakePopcornCommand = new IntakePopcornCommand(m_intake);
-  private final IntakeButterCommand m_IntakeButterCommand = new IntakeButterCommand(m_intake);
   private final Winch winch = new Winch(); 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Joystick joystick = new Joystick(0);
@@ -50,6 +48,7 @@ public class RobotContainer {
     configureBindings();
   }
   private void configureBindings() {
+    drivetrain.setDefaultCommand(getArcadeDriveCommand());
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));

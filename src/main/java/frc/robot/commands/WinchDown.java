@@ -19,7 +19,7 @@ public class WinchDown extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    winch.moveWinch(0.1);
+    winch.moveWinch(-0.7);
   }
 
 

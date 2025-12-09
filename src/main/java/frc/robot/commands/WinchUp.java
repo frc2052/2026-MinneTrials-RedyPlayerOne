@@ -20,7 +20,7 @@ public class WinchUp extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    winch.moveWinch(0.1);
+    winch.moveWinch(0.8);
   }
     
   // Called every time the scheduler runs while the command is scheduled.
