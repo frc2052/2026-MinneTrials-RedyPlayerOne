@@ -10,36 +10,33 @@ import frc.robot.subsystems.Shooter;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ShooterCommand extends Command {
   /** Creates a new ShooterCommand. */
-  public class ShootingCommand {
+
     private final Shooter m_shooter;
-    
-    public ShootingCommand(Shooter m_shooter){
+    public ShooterCommand(Shooter m_shooter){
         this.m_shooter = m_shooter;
         addRequirements(m_shooter);
     }
-    public void ShootingOut(){
-      m_shooter.ShooterTop(0.1);
-      m_shooter.ShooterBottom(-0.1);
-    }
-    public void ShootingStop(){
-      m_shooter.ShooterTop(0);
-      m_shooter.ShooterBottom(0);
-    }
+   
 
     
-}
+
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
-
+  public void initialize() {
+    m_shooter.shoot(0.1);
+  
+  }
+  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_shooter.shootStop();
+  }
 
   // Returns true when the command should end.
   @Override

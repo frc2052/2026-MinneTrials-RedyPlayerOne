@@ -5,39 +5,33 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Winch;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class IntakeButterCommand extends Command {
-  /** Creates a new Practe. */
-  private final Intake m_butter;
-    public IntakeButterCommand(Intake m_butter){
-        // m_butter = new Intake()
-        this.m_butter =  m_butter;
-        addRequirements(m_butter);
-    }
-    public void PickUp(){
-        m_butter.Intaking(0.1);
-    }
-    public void StopPickup(){
-        m_butter.Intaking(0);
-    }
-    public void SpitItOut(){
-        m_butter.Intaking(-0.1);
-    }
-
+public class WinchUp extends Command {
+  private final Winch winch;
+  /** Creates a new WinchUp. */
+  public WinchUp(Winch winch) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.winch = winch;
+    addRequirements(winch);
+  }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
-
+  public void initialize() {
+    winch.moveWinch(0.1);
+  }
+    
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    winch.moveWinch(0);
+  }
 
   // Returns true when the command should end.
   @Override

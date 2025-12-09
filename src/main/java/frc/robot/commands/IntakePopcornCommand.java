@@ -17,29 +17,13 @@ public class IntakePopcornCommand extends Command {
        // m_Popcorn = new Intake();
         this.m_Popcorn = m_Popcorn;
         addRequirements(m_Popcorn);
+  
     }
-    public void PickUp(){
-        m_Popcorn.Intaking(0.1);
-    }
-    public void StopPickup(){
-        m_Popcorn.Intaking(0);
-    }
-    public void SpitItOut(){
-        m_Popcorn.Intaking(-0.1);
-    }
-    public void ArmUp(){
-        m_Popcorn.IntakeUpDown(0.1);
-    }
-    public void StopArm(){
-        m_Popcorn.IntakeUpDown(0);
-    }
-    public void ArmDown(){
-        m_Popcorn.IntakeUpDown(-0.1);
-    }
-
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_Popcorn.Intaking(0.1);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -47,7 +31,9 @@ public class IntakePopcornCommand extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_Popcorn.Intaking(0);
+  }
 
   // Returns true when the command should end.
   @Override

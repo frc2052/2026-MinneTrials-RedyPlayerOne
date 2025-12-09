@@ -6,16 +6,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase{
     private final WPI_TalonSRX intakeRoller_motor = new WPI_TalonSRX(2);
-    private final WPI_TalonSRX intakeWinch_motor = new WPI_TalonSRX(3);
+
     public Intake(){
         intakeRoller_motor.configFactoryDefault();
-        intakeWinch_motor.configFactoryDefault();
+      
     }
     public void Intaking(double speed){
         intakeRoller_motor.set(speed);
     }
-    public void IntakeUpDown(double speed){
-        intakeWinch_motor.set(speed);
-    }
+   
 
 }
